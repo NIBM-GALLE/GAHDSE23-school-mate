@@ -51,7 +51,7 @@ export default function StudentLogin() {
           {/* Right side - Login Form */}
           <div className="w-full md:w-1/2 p-8 bg-[#f2fbf8]">
             <h1 className="text-3xl font-semibold text-center text-[#3b306c] mb-8">
-              Campus LMS
+              SchoolMate Login
             </h1>
             
             <form className="space-y-6" onSubmit={handleSubmit}>
