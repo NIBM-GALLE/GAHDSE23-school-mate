@@ -40,7 +40,7 @@ app.use('/api/facility-payments', facilityPaymentRoutes); // facilityPayment rou
 app.use('/api/parent', parentRoutes); // parent routes
 
 // Start Server
-const PORT = 3000;
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
