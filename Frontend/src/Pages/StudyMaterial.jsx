@@ -6,14 +6,14 @@ const initialMaterials = [
       "title": "ICT Lesson 1 Notes",
       "moduleId": "ICT101",
       "description": "Introduction to Computer Systems",
-      "fileUrl": "https://example.com/ict-lesson1.pdf",
+      "fileUrl": "https://schoolict.net/al-ict-basic-concepts-of-ict/",
       "status": "Completed"
     },
     {
       "title": "ICT Assignment 1",
       "moduleId": "ICT102",
       "description": "Answer all questions from Chapter 1",
-      "fileUrl": "https://example.com/ict-assignment1.docx",
+      "fileUrl": "https://www.scribd.com/document/559487839/ICT-Lesson-1-Short-Note-Sinhala",
       "status": "Not Started"
     },
     {
@@ -27,63 +27,63 @@ const initialMaterials = [
       "title": "Past Paper Discussion - 2023",
       "moduleId": "GEN301",
       "description": "A/L ICT Paper 2023 Marking Scheme",
-      "fileUrl": "https://example.com/ict-pastpaper2023.pdf",
+      "fileUrl": "https://www.scribd.com/document/767698564/20222023-AL-ICT-Marking-Scheme-English-Medium",
       "status": "Completed"
     },
     {
       "title": "ICT Lesson 2 Notes",
       "moduleId": "ICT103",
       "description": "Software Types and Examples",
-      "fileUrl": "https://example.com/ict-lesson2.pdf",
+      "fileUrl": "https://schoolict.net/al-ict-operating-system/",
       "status": "Not Started"
     },
     {
       "title": "Chemistry Lab Safety Notes",
       "moduleId": "CHEM101",
       "description": "Basic Safety Rules for School Chemistry Labs",
-      "fileUrl": "https://example.com/chemistry-safety.pdf",
+      "fileUrl": "https://eng.pdn.ac.lk/civil/assets/pdf/laboratory_safety_guidelines.pdf",
       "status": "Completed"
     },
     {
       "title": "Commerce Lesson 1",
       "moduleId": "COM101",
       "description": "Introduction to Business Studies",
-      "fileUrl": "https://example.com/commerce-intro.pdf",
+      "fileUrl": "https://nie.lk/pdffiles/tg/e12syl51.pdf",
       "status": "Not Started"
     },
     {
       "title": "ICT Assignment 2",
       "moduleId": "ICT104",
       "description": "Prepare a presentation on Operating Systems",
-      "fileUrl": "https://example.com/ict-assignment2.pptx",
+      "fileUrl": "https://www.scribd.com/document/741539623/GCE-Advanced-Level-ICT-OPERATING-SYSTEM",
       "status": "In Review"
     },
     {
       "title": "General Knowledge Quiz",
       "moduleId": "GEN302",
       "description": "Complete the online quiz on current affairs",
-      "fileUrl": "https://example.com/gk-quiz.html",
+      "fileUrl": "https://quizizz.com/admin/quiz/649ece6eb3df10001d272929/nati0nal-level-online-quiz-current-affairs",
       "status": "In Progress"
     },
     {
       "title": "Political Science - Constitution Overview",
       "moduleId": "POL101",
       "description": "Key Features of the 1978 Constitution of Sri Lanka",
-      "fileUrl": "https://example.com/political-science-constitution.pdf",
+      "fileUrl": "https://www.parliament.lk/files/pdf/constitution.pdf",
       "status": "Completed"
     },
     {
       "title": "Business Studies - Organizational Structures",
       "moduleId": "BUS101",
       "description": "Understanding Business Organization Types",
-      "fileUrl": "https://example.com/business-studies-org.pdf",
+      "fileUrl": "https://nie.lk/pdffiles/tg/e12syl51.pdf",
       "status": "Not Started"
     },
     {
       "title": "Applied Maths - Vectors Worksheet",
       "moduleId": "MATH201",
       "description": "Practice Problems on Vector Operations",
-      "fileUrl": "https://example.com/applied-maths-vectors.docx",
+      "fileUrl": "https://nie.lk/pdffiles/other/eALOM%20Combine%20Maths%20Pactical%20Question.pdf",
       "status": "In Progress"
     }
   ];
