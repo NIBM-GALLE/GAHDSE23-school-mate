@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, Clock, Search, Plus, Edit2, Trash2, Save, X, BookOpen } from 'lucide-react';
 
 // API Base URL - Update this to match your backend
