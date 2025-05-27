@@ -14,7 +14,7 @@ import AnnouncementPosting from "./Pages/AnnouncementPosting/AnnouncementPosting
 import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import StudyMaterials from "./Pages/StudyMaterialsPage/StudyMaterials";
 import FeedbackManagement from "./Pages/TeacherFeedbackPage/FeedbackManagement";
-
+import EventPage from "./Pages/EventDetails/EventPage";
 
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/study-material" element={<StudyMaterials />} />
         <Route path="/teacher-feedback" element={<FeedbackManagement />} />
-
+        <Route path="/event-details" element={<EventPage />} />
         {/* Add more routes as needed */}
 
 
