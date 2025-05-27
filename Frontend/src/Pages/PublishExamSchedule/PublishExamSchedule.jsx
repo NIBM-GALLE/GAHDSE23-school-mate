@@ -195,11 +195,11 @@ const ExamSchedule = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-6" style={{ background: 'linear-gradient(135deg, #f3f3f3 0%, #c4c4c4 100%)' }}>
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-300">
       
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
+          <div className="px-8 py-6" style={{ background: 'linear-gradient(135deg, #374258 0%, #6a7285 100%)' }}>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <Calendar className="h-8 w-8 text-white" />
@@ -207,7 +207,10 @@ const ExamSchedule = () => {
               </div>
               <button
                 onClick={() => setShowForm(true)}
-                className="bg-white text-blue-600 px-6 py-2 rounded-lg font-semibold hover:bg-blue-50 transition-colors flex items-center space-x-2"
+                className="text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 border-2 border-white hover:border-opacity-80"
+                style={{ backgroundColor: '#f74464', boxShadow: '0 4px 12px rgba(247, 68, 100, 0.3)' }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#e63954'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = '#f74464'}
               >
                 <Plus className="h-5 w-5" />
                 <span>Add Schedule</span>
@@ -218,25 +221,38 @@ const ExamSchedule = () => {
       
           {(success || error) && (
             <div className="px-8 py-4">
-              <div className={`p-4 rounded-lg ${success ? 'bg-green-100 text-green-800 border border-green-200' : 'bg-red-100 text-red-800 border border-red-200'}`}>
+              <div className={`p-4 rounded-lg border-2 ${success ? 'text-green-800 border-green-300' : 'text-red-800 border-red-300'}`} 
+                style={{ backgroundColor: success ? '#f0f9f0' : '#fef2f2' }}>
                 {success || error}
               </div>
             </div>
           )}
 
         
-          <div className="px-8 py-6 border-b border-gray-200">
+          <div className="px-8 py-6 border-b-2" style={{ borderColor: '#c4c4c4', backgroundColor: '#f8f9fa' }}>
             <div className="flex items-center space-x-4 mb-4">
-              <Search className="h-5 w-5 text-gray-400" />
-              <h2 className="text-lg font-semibold text-gray-700">Search & Filter</h2>
+              <Search className="h-5 w-5" style={{ color: '#6a7285' }} />
+              <h2 className="text-lg font-semibold" style={{ color: '#374258' }}>Search & Filter</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Module</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>Module</label>
                 <select
                   value={searchFilters.moduleId}
                   onChange={(e) => setSearchFilters({ ...searchFilters, moduleId: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                  style={{ 
+                    borderColor: '#c4c4c4',
+                    backgroundColor: 'white'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#f74464';
+                    e.target.style.boxShadow = '0 0 0 3px rgba(247, 68, 100, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#c4c4c4';
+                    e.target.style.boxShadow = 'none';
+                  }}
                 >
                   <option value="">All Modules</option>
                   {modules.map(module => (
@@ -245,25 +261,43 @@ const ExamSchedule = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>Date</label>
                 <input
                   type="date"
                   value={searchFilters.date}
                   onChange={(e) => setSearchFilters({ ...searchFilters, date: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                  style={{ 
+                    borderColor: '#c4c4c4',
+                    backgroundColor: 'white'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#f74464';
+                    e.target.style.boxShadow = '0 0 0 3px rgba(247, 68, 100, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#c4c4c4';
+                    e.target.style.boxShadow = 'none';
+                  }}
                 />
               </div>
               <div className="flex items-end space-x-2">
                 <button
                   onClick={handleSearch}
-                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                  className="text-white px-6 py-2 rounded-lg transition-all duration-300 flex items-center space-x-2 font-medium"
+                  style={{ backgroundColor: '#6a7285', boxShadow: '0 4px 12px rgba(106, 114, 133, 0.3)' }}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = '#374258'}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = '#6a7285'}
                 >
                   <Search className="h-4 w-4" />
                   <span>Search</span>
                 </button>
                 <button
                   onClick={resetSearch}
-                  className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                  className="text-white px-6 py-2 rounded-lg transition-all duration-300 font-medium"
+                  style={{ backgroundColor: '#c4c4c4' }}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = '#6a7285'}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = '#c4c4c4'}
                 >
                   Reset
                 </button>
@@ -274,14 +308,17 @@ const ExamSchedule = () => {
           
           {showForm && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
-                <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-                  <h3 className="text-xl font-semibold text-gray-800">
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md border-2" style={{ borderColor: '#6a7285' }}>
+                <div className="px-6 py-4 border-b-2 flex items-center justify-between" style={{ borderColor: '#c4c4c4', backgroundColor: '#f8f9fa' }}>
+                  <h3 className="text-xl font-semibold" style={{ color: '#374258' }}>
                     {editingId ? 'Edit Exam Schedule' : 'Add New Exam Schedule'}
                   </h3>
                   <button
                     onClick={resetForm}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="transition-colors duration-200"
+                    style={{ color: '#6a7285' }}
+                    onMouseEnter={(e) => e.target.style.color = '#f74464'}
+                    onMouseLeave={(e) => e.target.style.color = '#6a7285'}
                   >
                     <X className="h-6 w-6" />
                   </button>
@@ -289,12 +326,24 @@ const ExamSchedule = () => {
                 
                 <div className="p-6 space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Module *</label>
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>Module *</label>
                     <select
                       value={formData.moduleId}
                       onChange={(e) => setFormData({ ...formData, moduleId: e.target.value })}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                      style={{ 
+                        borderColor: '#c4c4c4',
+                        backgroundColor: 'white'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = '#f74464';
+                        e.target.style.boxShadow = '0 0 0 3px rgba(247, 68, 100, 0.1)';
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = '#c4c4c4';
+                        e.target.style.boxShadow = 'none';
+                      }}
                     >
                       <option value="">Select Module</option>
                       {modules.map(module => (
@@ -304,46 +353,94 @@ const ExamSchedule = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Date *</label>
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>Date *</label>
                     <input
                       type="date"
                       value={formData.date}
                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                      style={{ 
+                        borderColor: '#c4c4c4',
+                        backgroundColor: 'white'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = '#f74464';
+                        e.target.style.boxShadow = '0 0 0 3px rgba(247, 68, 100, 0.1)';
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = '#c4c4c4';
+                        e.target.style.boxShadow = 'none';
+                      }}
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Start Time *</label>
+                      <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>Start Time *</label>
                       <input
                         type="time"
                         value={formData.startTime}
                         onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                        style={{ 
+                          borderColor: '#c4c4c4',
+                          backgroundColor: 'white'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = '#f74464';
+                          e.target.style.boxShadow = '0 0 0 3px rgba(247, 68, 100, 0.1)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = '#c4c4c4';
+                          e.target.style.boxShadow = 'none';
+                        }}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">End Time *</label>
+                      <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>End Time *</label>
                       <input
                         type="time"
                         value={formData.endTime}
                         onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                        style={{ 
+                          borderColor: '#c4c4c4',
+                          backgroundColor: 'white'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = '#f74464';
+                          e.target.style.boxShadow = '0 0 0 3px rgba(247, 68, 100, 0.1)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = '#c4c4c4';
+                          e.target.style.boxShadow = 'none';
+                        }}
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Note</label>
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>Note</label>
                     <textarea
                       value={formData.note}
                       onChange={(e) => setFormData({ ...formData, note: e.target.value })}
                       rows={3}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                      style={{ 
+                        borderColor: '#c4c4c4',
+                        backgroundColor: 'white'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = '#f74464';
+                        e.target.style.boxShadow = '0 0 0 3px rgba(247, 68, 100, 0.1)';
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = '#c4c4c4';
+                        e.target.style.boxShadow = 'none';
+                      }}
                       placeholder="Optional notes about the exam..."
                     />
                   </div>
@@ -352,14 +449,23 @@ const ExamSchedule = () => {
                     <button
                       onClick={handleSubmit}
                       disabled={loading}
-                      className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center justify-center space-x-2"
+                      className="flex-1 text-white py-2 px-4 rounded-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-2 font-medium"
+                      style={{ 
+                        backgroundColor: '#f74464',
+                        boxShadow: '0 4px 12px rgba(247, 68, 100, 0.3)'
+                      }}
+                      onMouseEnter={(e) => !loading && (e.target.style.backgroundColor = '#e63954')}
+                      onMouseLeave={(e) => !loading && (e.target.style.backgroundColor = '#f74464')}
                     >
                       <Save className="h-4 w-4" />
                       <span>{loading ? 'Saving...' : (editingId ? 'Update' : 'Create')}</span>
                     </button>
                     <button
                       onClick={resetForm}
-                      className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors"
+                      className="flex-1 text-white py-2 px-4 rounded-lg transition-all duration-300 font-medium"
+                      style={{ backgroundColor: '#6a7285' }}
+                      onMouseEnter={(e) => e.target.style.backgroundColor = '#374258'}
+                      onMouseLeave={(e) => e.target.style.backgroundColor = '#6a7285'}
                     >
                       Cancel
                     </button>
@@ -373,41 +479,54 @@ const ExamSchedule = () => {
           <div className="px-8 py-6">
             {loading && (
               <div className="text-center py-8">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <p className="mt-2 text-gray-600">Loading...</p>
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: '#f74464' }}></div>
+                <p className="mt-2" style={{ color: '#6a7285' }}>Loading...</p>
               </div>
             )}
 
             {!loading && schedules.length === 0 && (
               <div className="text-center py-12">
-                <Calendar className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-500 mb-2">No exam schedules found</h3>
-                <p className="text-gray-400">Create your first exam schedule to get started.</p>
+                <Calendar className="h-16 w-16 mx-auto mb-4" style={{ color: '#c4c4c4' }} />
+                <h3 className="text-lg font-medium mb-2" style={{ color: '#6a7285' }}>No exam schedules found</h3>
+                <p style={{ color: '#c4c4c4' }}>Create your first exam schedule to get started.</p>
               </div>
             )}
 
             {!loading && schedules.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {schedules.map((schedule) => (
-                  <div key={schedule._id} className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow">
+                  <div 
+                    key={schedule._id} 
+                    className="bg-white rounded-xl shadow-lg border-2 overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1"
+                    style={{ 
+                      borderColor: '#c4c4c4',
+                      background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)'
+                    }}
+                  >
                     <div className="p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center space-x-2">
-                          <BookOpen className="h-5 w-5 text-blue-600" />
-                          <h3 className="font-semibold text-gray-800">
+                          <BookOpen className="h-5 w-5" style={{ color: '#f74464' }} />
+                          <h3 className="font-semibold" style={{ color: '#374258' }}>
                             {schedule.moduleId?.name || 'Unknown Module'}
                           </h3>
                         </div>
                         <div className="flex space-x-2">
                           <button
                             onClick={() => handleEdit(schedule)}
-                            className="text-blue-600 hover:text-blue-800 transition-colors"
+                            className="transition-colors duration-200"
+                            style={{ color: '#6a7285' }}
+                            onMouseEnter={(e) => e.target.style.color = '#f74464'}
+                            onMouseLeave={(e) => e.target.style.color = '#6a7285'}
                           >
                             <Edit2 className="h-4 w-4" />
                           </button>
                           <button
                             onClick={() => handleDelete(schedule._id)}
-                            className="text-red-600 hover:text-red-800 transition-colors"
+                            className="transition-colors duration-200"
+                            style={{ color: '#6a7285' }}
+                            onMouseEnter={(e) => e.target.style.color = '#f74464'}
+                            onMouseLeave={(e) => e.target.style.color = '#6a7285'}
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -415,12 +534,12 @@ const ExamSchedule = () => {
                       </div>
 
                       <div className="space-y-3">
-                        <div className="flex items-center space-x-2 text-gray-600">
+                        <div className="flex items-center space-x-2" style={{ color: '#6a7285' }}>
                           <Calendar className="h-4 w-4" />
                           <span className="text-sm">{formatDate(schedule.date)}</span>
                         </div>
                         
-                        <div className="flex items-center space-x-2 text-gray-600">
+                        <div className="flex items-center space-x-2" style={{ color: '#6a7285' }}>
                           <Clock className="h-4 w-4" />
                           <span className="text-sm">
                             {formatTime(schedule.startTime)} - {formatTime(schedule.endTime)}
@@ -428,8 +547,8 @@ const ExamSchedule = () => {
                         </div>
 
                         {schedule.note && (
-                          <div className="mt-3 p-3 bg-blue-50 rounded-lg">
-                            <p className="text-sm text-gray-700">{schedule.note}</p>
+                          <div className="mt-3 p-3 rounded-lg border" style={{ backgroundColor: '#f8f9fa', borderColor: '#c4c4c4' }}>
+                            <p className="text-sm" style={{ color: '#374258' }}>{schedule.note}</p>
                           </div>
                         )}
                       </div>
