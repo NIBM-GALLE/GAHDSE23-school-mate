@@ -18,6 +18,8 @@ const timetablesRoutes = require('./routes/timetables');
 const examRoutes = require('./routes/exam');
 const eventRoutes = require('./routes/events');
 const paymentRoutes = require('./routes/payments');
+const feedbackRoutes = require('./routes/feedback'); // Feedback routes
+
 
 const app = express();
 
@@ -46,7 +48,7 @@ app.use('/api/timetables', timetableRoutes);
 app.use('/api/exam', examRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/payments', paymentRoutes);
-
+app.use('/api/feedback', feedbackRoutes);
 // Start Server
 const PORT = 5000;
 app.listen(PORT, () => {
