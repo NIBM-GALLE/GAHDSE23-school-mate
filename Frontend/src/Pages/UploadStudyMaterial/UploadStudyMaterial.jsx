@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, Edit3, Trash2, File, Plus, X, Save, AlertCircle } from 'lucide-react';
 
-const StudyMaterialManager = () => {
+const StudyMaterial = () => {
   const [materials, setMaterials] = useState([]);
   const [modules, setModules] = useState([
     { _id: '507f1f77bcf86cd799439011', name: 'Mathematics' },
@@ -388,4 +388,4 @@ const StudyMaterialManager = () => {
   );
 };
 
-export default StudyMaterialManager;
+export default StudyMaterial;
