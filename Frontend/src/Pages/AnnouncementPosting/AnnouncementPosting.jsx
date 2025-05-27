@@ -13,10 +13,8 @@ const Announcement = () => {
     audience: 'students'
   });
 
-
   const authToken = 'your-auth-token-here';
 
-  
   useEffect(() => {
     setAnnouncements([
       {
@@ -61,7 +59,6 @@ const Announcement = () => {
 
     try {
       if (editingId) {
-        
         const response = await fetch(`/api/announcements/${editingId}`, {
           method: 'PUT',
           headers: {
@@ -81,7 +78,6 @@ const Announcement = () => {
           alert('Failed to update announcement');
         }
       } else {
-
         const response = await fetch('/api/announcements', {
           method: 'POST',
           headers: {
@@ -149,20 +145,20 @@ const Announcement = () => {
       case 'urgent':
         return <AlertCircle className="w-5 h-5 text-red-500" />;
       case 'warning':
-        return <AlertTriangle className="w-5 h-5 text-yellow-500" />;
+        return <AlertTriangle className="w-5 h-5 text-orange-500" />;
       default:
-        return <Info className="w-5 h-5 text-blue-500" />;
+        return <Info className="w-5 h-5" style={{ color: '#374258' }} />;
     }
   };
 
   const getAudienceIcon = (audience) => {
     switch (audience) {
       case 'teachers':
-        return <UserCheck className="w-4 h-4 text-purple-500" />;
+        return <UserCheck className="w-4 h-4" style={{ color: '#f74464' }} />;
       case 'all':
-        return <Users className="w-4 h-4 text-green-500" />;
+        return <Users className="w-4 h-4" style={{ color: '#6a7285' }} />;
       default:
-        return <GraduationCap className="w-4 h-4 text-blue-500" />;
+        return <GraduationCap className="w-4 h-4" style={{ color: '#374258' }} />;
     }
   };
 
@@ -171,162 +167,205 @@ const Announcement = () => {
       case 'urgent':
         return 'border-l-red-500 bg-red-50';
       case 'warning':
-        return 'border-l-yellow-500 bg-yellow-50';
+        return 'border-l-orange-500 bg-orange-50';
       default:
-        return 'border-l-blue-500 bg-blue-50';
+        return 'bg-white' + ' border-l-4';
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen">
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">Announcement Management</h1>
-          <button
-            onClick={() => setShowForm(true)}
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <Plus className="w-4 h-4" />
-            New Announcement
-          </button>
-        </div>
-
-        {showForm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-              <h2 className="text-xl font-semibold mb-4">
-                {editingId ? 'Edit Announcement' : 'Create New Announcement'}
-              </h2>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Title
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.title}
-                    onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Message     
-                  </label>
-                  <textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Type
-                  </label>
-                  <select
-                    value={formData.type}
-                    onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="info">Info</option>
-                    <option value="warning">Warning</option>
-                    <option value="urgent">Urgent</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Audience
-                  </label>
-                  <select
-                    value={formData.audience}
-                    onChange={(e) => setFormData(prev => ({ ...prev, audience: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="students">Students</option>
-                    <option value="teachers">Teachers</option>
-                    <option value="all">All</option>
-                  </select>
-                </div>
-
-                <div className="flex gap-3 pt-4">
-                  <button
-                    onClick={handleSubmit}
-                    disabled={loading}
-                    className="flex-1 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
-                  >
-                    {loading ? 'Saving...' : editingId ? 'Update' : 'Publish'}
-                  </button>
-                  <button
-                    onClick={resetForm}
-                    className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-400 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
+    <div className="min-h-screen" style={{ backgroundColor: '#f3f3f3' }}>
+      <div className="max-w-4xl mx-auto p-6">
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-6" style={{ borderTop: '4px solid #f74464' }}>
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold" style={{ color: '#374258' }}>
+              Announcement Management
+            </h1>
+            <button
+              onClick={() => setShowForm(true)}
+              className="flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium hover:opacity-90 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              style={{ backgroundColor: '#f74464' }}
+            >
+              <Plus className="w-5 h-5" />
+              New Announcement
+            </button>
           </div>
-        )}
 
-        <div className="space-y-4">
-          {announcements.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              No announcements yet. Create your first announcement!
-            </div>
-          ) : (
-            announcements.map((announcement) => (
-              <div
-                key={announcement._id}
-                className={`border-l-4 rounded-lg p-4 ${getTypeColor(announcement.type)}`}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div className="flex items-center gap-2">
-                    {getTypeIcon(announcement.type)}
-                    <h3 className="font-semibold text-gray-800">{announcement.title}</h3>
+          {showForm && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-xl p-8 w-full max-w-md shadow-2xl">
+                <h2 className="text-2xl font-semibold mb-6" style={{ color: '#374258' }}>
+                  {editingId ? 'Edit Announcement' : 'Create New Announcement'}
+                </h2>
+                
+                <div className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>
+                      Title
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.title}
+                      onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                      className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all"
+                      style={{ 
+                        borderColor: '#c4c4c4',
+                        focusRingColor: '#f74464'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = '#f74464'}
+                      onBlur={(e) => e.target.style.borderColor = '#c4c4c4'}
+                      required
+                    />
                   </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => handleEdit(announcement)}
-                      className="p-1 text-gray-500 hover:text-blue-600 transition-colors"
-                      title="Edit"
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>
+                      Message     
+                    </label>
+                    <textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+                      rows={4}
+                      className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all resize-none"
+                      style={{ 
+                        borderColor: '#c4c4c4'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = '#f74464'}
+                      onBlur={(e) => e.target.style.borderColor = '#c4c4c4'}
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>
+                      Type
+                    </label>
+                    <select
+                      value={formData.type}
+                      onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value }))}
+                      className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all"
+                      style={{ 
+                        borderColor: '#c4c4c4'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = '#f74464'}
+                      onBlur={(e) => e.target.style.borderColor = '#c4c4c4'}
                     >
-                      <Edit2 className="w-4 h-4" />
+                      <option value="info">Info</option>
+                      <option value="warning">Warning</option>
+                      <option value="urgent">Urgent</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#374258' }}>
+                      Audience
+                    </label>
+                    <select
+                      value={formData.audience}
+                      onChange={(e) => setFormData(prev => ({ ...prev, audience: e.target.value }))}
+                      className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all"
+                      style={{ 
+                        borderColor: '#c4c4c4'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = '#f74464'}
+                      onBlur={(e) => e.target.style.borderColor = '#c4c4c4'}
+                    >
+                      <option value="students">Students</option>
+                      <option value="teachers">Teachers</option>
+                      <option value="all">All</option>
+                    </select>
+                  </div>
+
+                  <div className="flex gap-4 pt-6">
+                    <button
+                      onClick={handleSubmit}
+                      disabled={loading}
+                      className="flex-1 py-3 rounded-lg text-white font-medium hover:opacity-90 transition-all duration-200 disabled:opacity-50 shadow-md hover:shadow-lg"
+                      style={{ backgroundColor: '#f74464' }}
+                    >
+                      {loading ? 'Saving...' : editingId ? 'Update' : 'Publish'}
                     </button>
                     <button
-                      onClick={() => handleDelete(announcement._id)}
-                      className="p-1 text-gray-500 hover:text-red-600 transition-colors"
-                      title="Delete"
+                      onClick={resetForm}
+                      className="flex-1 py-3 rounded-lg font-medium hover:opacity-90 transition-all duration-200 shadow-md hover:shadow-lg"
+                      style={{ 
+                        backgroundColor: '#6a7285',
+                        color: 'white'
+                      }}
                     >
-                      <Trash2 className="w-4 h-4" />
+                      Cancel
                     </button>
                   </div>
-                </div>
-                
-                <p className="text-gray-700 mb-3">{announcement.message}</p>
-                
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <div className="flex items-center gap-1">
-                    {getAudienceIcon(announcement.audience)}
-                    <span className="capitalize">{announcement.audience}</span>
-                  </div>
-                  <span>
-                    {new Date(announcement.createdAt).toLocaleDateString()} at{' '}
-                    {new Date(announcement.createdAt).toLocaleTimeString([], { 
-                      hour: '2-digit', 
-                      minute: '2-digit' 
-                    })}
-                  </span>
                 </div>
               </div>
-            ))
+            </div>
           )}
+
+          <div className="space-y-6">
+            {announcements.length === 0 ? (
+              <div className="text-center py-12 rounded-lg" style={{ backgroundColor: '#f3f3f3', color: '#6a7285' }}>
+                <div className="text-lg font-medium">No announcements yet</div>
+                <div className="text-sm mt-2">Create your first announcement to get started!</div>
+              </div>
+            ) : (
+              announcements.map((announcement) => (
+                <div
+                  key={announcement._id}
+                  className="rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-200 border-l-4"
+                  style={{
+                    backgroundColor: 'white',
+                    borderLeftColor: announcement.type === 'urgent' ? '#ef4444' : 
+                                   announcement.type === 'warning' ? '#f97316' : '#f74464'
+                  }}
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex items-center gap-3">
+                      {getTypeIcon(announcement.type)}
+                      <h3 className="font-semibold text-xl" style={{ color: '#374258' }}>
+                        {announcement.title}
+                      </h3>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleEdit(announcement)}
+                        className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                        style={{ color: '#6a7285' }}
+                        title="Edit"
+                      >
+                        <Edit2 className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(announcement._id)}
+                        className="p-2 rounded-lg hover:bg-red-50 transition-colors hover:text-red-600"
+                        style={{ color: '#6a7285' }}
+                        title="Delete"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <p className="text-lg mb-4 leading-relaxed" style={{ color: '#374258' }}>
+                    {announcement.message}
+                  </p>
+                  
+                  <div className="flex items-center justify-between text-sm" style={{ color: '#6a7285' }}>
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-full" style={{ backgroundColor: '#f3f3f3' }}>
+                      {getAudienceIcon(announcement.audience)}
+                      <span className="capitalize font-medium">{announcement.audience}</span>
+                    </div>
+                    <span className="font-medium">
+                      {new Date(announcement.createdAt).toLocaleDateString()} at{' '}
+                      {new Date(announcement.createdAt).toLocaleTimeString([], { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                      })}
+                    </span>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </div>
