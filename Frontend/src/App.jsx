@@ -8,14 +8,10 @@ import UploadStudyMaterial from "./Pages/UploadStudyMaterial/UploadStudyMaterial
 import PublishExamSchedule from "./Pages/PublishExamSchedule/PublishExamSchedule";
 import TimeTableManager from "./Pages/TimeTableManager/TimeTableManager";
 import AttendanceManager from "./Pages/AttendanceManager/AttendanceManager";
-
-// import StudentGradeReport from "./Pages/StudentLandingPage/StudentGradeReport";
 import TeacherGradeReports from "./components/TeacherGradeReports";
 import ALGradesReports from "@/components/ALGradesReports";
-
 import AnnouncementPosting from "./Pages/AnnouncementPosting/AnnouncementPosting";
 import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
-import StudyMaterial from "./Pages/StudyMaterialsPage/StudyMaterials";
 import StudyMaterials from "./Pages/StudyMaterialsPage/StudyMaterials";
 
 
