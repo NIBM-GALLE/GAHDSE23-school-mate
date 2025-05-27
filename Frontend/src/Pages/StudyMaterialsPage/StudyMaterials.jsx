@@ -67,6 +67,92 @@ const StudyMaterials = () => {
       fileUrl: "https://www.coursera.org/learn/wharton-entrepreneurship",
       status: "Not Started",
     },
+    {
+  title: "Critical Thinking and Problem Solving",
+  moduleId: "GEN101",
+  description: "Improve reasoning skills through real-life problem-solving techniques",
+  fileUrl: "https://www.edx.org/course/critical-thinking-problem-solving",
+  status: "Completed",
+},
+{
+  title: "Time Management for Students",
+  moduleId: "GEN102",
+  description: "Strategies to manage time effectively for academic success",
+  fileUrl: "https://www.mindtools.com/pages/main/newMN_HTE.htm",
+  status: "In Progress",
+},
+{
+  title: "Effective Communication Skills",
+  moduleId: "GEN103",
+  description: "Learn how to communicate clearly and confidently in any setting",
+  fileUrl: "https://www.coursera.org/learn/wharton-communication-skills",
+  status: "Completed",
+},
+{
+  title: "Digital Literacy Basics",
+  moduleId: "ICT001",
+  description: "Essential skills for using digital tools and the internet safely",
+  fileUrl: "https://edu.gcfglobal.org/en/digital-literacy/",
+  status: "Not Started",
+},
+{
+  title: "Ethical Hacking Overview",
+  moduleId: "CYB301",
+  description: "Learn ethical hacking fundamentals and cybersecurity awareness",
+  fileUrl: "https://www.cybrary.it/course/ethical-hacking/",
+  status: "In Review",
+},
+{
+  title: "Emotional Intelligence for Students",
+  moduleId: "GEN104",
+  description: "Understand and manage emotions for personal and academic growth",
+  fileUrl: "https://www.futurelearn.com/courses/emotional-intelligence-at-work",
+  status: "In Progress",
+},
+{
+  title: "Financial Literacy for Beginners",
+  moduleId: "FIN100",
+  description: "Basic personal finance concepts like budgeting, saving, and investing",
+  fileUrl: "https://www.investopedia.com/financial-literacy-5188651",
+  status: "Completed",
+},
+{
+  title: "Public Speaking and Presentation",
+  moduleId: "COM201",
+  description: "Learn techniques to deliver impactful speeches and presentations",
+  fileUrl: "https://www.toastmasters.org/resources/public-speaking-tips",
+  status: "In Progress",
+},
+{
+  title: "Environmental Awareness and Sustainability",
+  moduleId: "ENV101",
+  description: "Explore topics like climate change, waste management, and green tech",
+  fileUrl: "https://www.un.org/sustainabledevelopment/sustainable-consumption-production/",
+  status: "Not Started",
+},
+{
+  title: "Basics of Entrepreneurship",
+  moduleId: "ENT100",
+  description: "An introduction to starting and managing a small business or startup",
+  fileUrl: "https://www.khanacademy.org/economics-finance-domain/entrepreneurship",
+  status: "Completed",
+},
+{
+  title: "Career Planning Guide",
+  moduleId: "GEN105",
+  description: "Steps to explore, plan, and achieve career goals effectively",
+  fileUrl: "https://bigfuture.collegeboard.org/plan-for-college/careers-career-search",
+  status: "In Review",
+},
+{
+  title: "Critical Thinking and Problem Solving",
+  moduleId: "GEN110",
+  description: "Techniques to analyze situations, identify solutions, and make logical decisions",
+  fileUrl: "https://www.skillsyouneed.com/learn/critical-thinking.html",
+  status: "Completed",
+}
+
+
   ];
 
   const [moduleFilter, setModuleFilter] = useState("All");
