@@ -602,7 +602,7 @@ const AdminDashboard = () => {
       <div className="w-64 bg-slate-800 text-white shadow-lg">
         <div className="p-6">
           <h1 className="text-2xl font-bold text-white">Admin Panel</h1>
-          <p className="text-slate-300 text-sm mt-1">School Management System</p>
+          <p className="text-slate-300 text-sm mt-1">SchoolMate</p>
         </div>
         
         <nav className="mt-6">

@@ -6,6 +6,7 @@ import AdminLoginPage from "./Pages/AdminPortal/AdminPortal";
 import TeacherParentChat from "./Pages/TeacherChatPage/TeacherChatPage";
 import TimeTableManager from "./Pages/TimeTableManager/TimeTableManager";
 import AttendanceManager from "./Pages/AttendanceManager/AttendanceManager";
+import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/teacher-chat" element={<TeacherParentChat />} />
         <Route path="/timetable-manager" element={<TimeTableManager />} />
         <Route path="/attendance-manager" element={<AttendanceManager />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         {/* Add more routes as needed */}
 
       </Routes>
