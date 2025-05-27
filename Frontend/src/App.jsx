@@ -5,6 +5,7 @@ import TeacherLogin from "./Pages/TeacherLandingPage/TeacherLogin";
 import AdminLoginPage from "./Pages/AdminPortal/AdminPortal";
 import TeacherParentChat from "./Pages/TeacherChatPage/TeacherChatPage";
 import UploadStudyMaterial from "./Pages/UploadStudyMaterial/UploadStudyMaterial";
+import PublishExamSchedule from "./Pages/PublishExamSchedule/PublishExamSchedule";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
 
         <Route path="/teacher-chat" element={<TeacherParentChat />} />
         <Route path="/upload_studymaterial" element={<UploadStudyMaterial />} />
+        <Route path="/publish_examschedule" element={<PublishExamSchedule />} />
         {/* Add more routes as needed */}
 
 
