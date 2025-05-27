@@ -1,8 +1,15 @@
 const express = require('express');
+const cors = require('cors'); // ✅ Import cors
 const connectDB = require('./config/db');
 const gradeReportRoutes = require('./routes/gradeReport');
 
 const app = express();
+
+// ✅ Enable CORS (adjust origin if needed)
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true // use if you're dealing with cookies or sessions
+}));
 
 // Connect to MongoDB
 connectDB();
