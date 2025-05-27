@@ -8,6 +8,7 @@ import UploadStudyMaterial from "./Pages/UploadStudyMaterial/UploadStudyMaterial
 import PublishExamSchedule from "./Pages/PublishExamSchedule/PublishExamSchedule";
 import TimeTableManager from "./Pages/TimeTableManager/TimeTableManager";
 import AttendanceManager from "./Pages/AttendanceManager/AttendanceManager";
+import AnnouncementPosting from "./Pages/AnnouncementPosting/AnnouncementPosting";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/publish_examschedule" element={<PublishExamSchedule />} />
         <Route path="/timetable-manager" element={<TimeTableManager />} />
         <Route path="/attendance-manager" element={<AttendanceManager />} />
+        <Route path="/announcement_posting" element={<AnnouncementPosting />} />
 
         {/* Add more routes as needed */}
 
