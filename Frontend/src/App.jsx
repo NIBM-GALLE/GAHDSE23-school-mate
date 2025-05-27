@@ -10,7 +10,8 @@ import TimeTableManager from "./Pages/TimeTableManager/TimeTableManager";
 import AttendanceManager from "./Pages/AttendanceManager/AttendanceManager";
 import AnnouncementPosting from "./Pages/AnnouncementPosting/AnnouncementPosting";
 import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
-
+import StudyMaterial from "./Pages/StudyMaterialsPage/StudyMaterials";
+import StudyMaterials from "./Pages/StudyMaterialsPage/StudyMaterials";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
         <Route path="/attendance-manager" element={<AttendanceManager />} />
         <Route path="/announcement_posting" element={<AnnouncementPosting />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
-
+        <Route path="/study-material" element={<StudyMaterials />} />
         {/* Add more routes as needed */}
 
 
