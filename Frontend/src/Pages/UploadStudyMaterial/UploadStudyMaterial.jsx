@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Plus, Edit2, Trash2, FileText, Download, X, Save, Book } from 'lucide-react';
+import { Upload, Edit3, Trash2, File, Plus, X, Save, AlertCircle } from 'lucide-react';
 
-const StudyMaterialsApp = () => {
+const StudyMaterialManager = () => {
   const [materials, setMaterials] = useState([]);
-  const [modules, setModules] = useState([]);
+  const [modules, setModules] = useState([
+    { _id: '507f1f77bcf86cd799439011', name: 'Mathematics' },
+    { _id: '507f1f77bcf86cd799439012', name: 'Physics' },
+    { _id: '507f1f77bcf86cd799439013', name: 'Chemistry' },
+    { _id: '507f1f77bcf86cd799439014', name: 'Biology' }
+  ]);
+  const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [editingMaterial, setEditingMaterial] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedModule, setSelectedModule] = useState('');
-  const [searchType, setSearchType] = useState('title');
-
-
+  const [message, setMessage] = useState({ type: '', text: '' });
+  
   const [formData, setFormData] = useState({
     moduleId: '',
     title: '',
@@ -20,116 +21,33 @@ const StudyMaterialsApp = () => {
     fileUrl: ''
   });
 
-
-  const API_BASE = 'http://localhost:3000/api';
-
-  
-  const fetchMaterials = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${API_BASE}/study-materials`);
-      if (response.ok) {
-        const data = await response.json();
-        setMaterials(data);
+  // Sample data for demonstration
+  useEffect(() => {
+    setMaterials([
+      {
+        _id: '1',
+        moduleId: '507f1f77bcf86cd799439011',
+        title: 'Calculus Fundamentals',
+        description: 'Introduction to differential and integral calculus',
+        fileUrl: 'https://example.com/calculus.pdf',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      },
+      {
+        _id: '2',
+        moduleId: '507f1f77bcf86cd799439012',
+        title: 'Quantum Mechanics Basics',
+        description: 'Basic principles of quantum mechanics',
+        fileUrl: 'https://example.com/quantum.pdf',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       }
-    } catch (error) {
-      console.error('Error fetching materials:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    ]);
+  }, []);
 
-  const createMaterial = async (materialData) => {
-    try {
-      const response = await fetch(`${API_BASE}/study-materials`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(materialData),
-      });
-      
-      if (response.ok) {
-        await fetchMaterials();
-        setShowAddModal(false);
-        resetForm();
-        alert('Study material added successfully!');
-      }
-    } catch (error) {
-      console.error('Error creating material:', error);
-      alert('Error creating material');
-    }
-  };
-
-  
-  const updateMaterial = async (id, materialData) => {
-    try {
-      const response = await fetch(`${API_BASE}/study-materials/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(materialData),
-      });
-      
-      if (response.ok) {
-        await fetchMaterials();
-        setShowEditModal(false);
-        setEditingMaterial(null);
-        resetForm();
-        alert('Study material updated successfully!');
-      }
-    } catch (error) {
-      console.error('Error updating material:', error);
-      alert('Error updating material');
-    }
-  };
-
-  
-  const deleteMaterial = async (id) => {
-    if (window.confirm('Are you sure you want to delete this material?')) {
-      try {
-        const response = await fetch(`${API_BASE}/study-materials/${id}`, {
-          method: 'DELETE',
-        });
-        
-        if (response.ok) {
-          await fetchMaterials();
-          alert('Study material deleted successfully!');
-        }
-      } catch (error) {
-        console.error('Error deleting material:', error);
-        alert('Error deleting material');
-      }
-    }
-  };
-
-  
-  const searchMaterials = async () => {
-    if (!searchTerm.trim()) {
-      fetchMaterials();
-      return;
-    }
-
-    setLoading(true);
-    try {
-      let url;
-      if (searchType === 'title') {
-        url = `${API_BASE}/study-materials/search/title?title=${encodeURIComponent(searchTerm)}`;
-      } else if (searchType === 'module') {
-        url = `${API_BASE}/study-materials/search/module?moduleId=${encodeURIComponent(searchTerm)}`;
-      }
-      
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        setMaterials(data);
-      }
-    } catch (error) {
-      console.error('Error searching materials:', error);
-    } finally {
-      setLoading(false);
-    }
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage({ type: '', text: '' }), 4000);
   };
 
   const resetForm = () => {
@@ -139,290 +57,248 @@ const StudyMaterialsApp = () => {
       description: '',
       fileUrl: ''
     });
+    setEditingId(null);
+    setShowForm(false);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = () => {
-    if (!formData.moduleId || !formData.title || !formData.description || !formData.fileUrl) {
-      alert('Please fill in all fields');
+  const handleSubmit = async () => {
+    if (!formData.title || !formData.description || !formData.fileUrl || (!editingId && !formData.moduleId)) {
+      showMessage('error', 'Please fill in all required fields');
       return;
     }
-    
-    if (editingMaterial) {
-      updateMaterial(editingMaterial._id, formData);
-    } else {
-      createMaterial(formData);
+
+    setLoading(true);
+
+    try {
+      if (editingId) {
+        // Update existing material
+        const response = await fetch(`/api/study-material/${editingId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title: formData.title,
+            description: formData.description,
+            fileUrl: formData.fileUrl
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setMaterials(materials.map(m => 
+            m._id === editingId ? data.material : m
+          ));
+          showMessage('success', 'Study material updated successfully!');
+        } else {
+          const errorData = await response.json();
+          showMessage('error', errorData.msg || 'Failed to update material');
+        }
+      } else {
+        // Create new material
+        const response = await fetch('/api/study-material', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.status === 201) {
+          const data = await response.json();
+          setMaterials([...materials, data.material]);
+          showMessage('success', 'Study material added successfully!');
+        } else {
+          const errorData = await response.json();
+          showMessage('error', errorData.error || 'Failed to create material');
+        }
+      }
+      resetForm();
+    } catch (error) {
+      showMessage('error', 'Network error. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const openEditModal = (material) => {
-    setEditingMaterial(material);
+  const handleEdit = (material) => {
     setFormData({
-      moduleId: typeof material.moduleId === 'object' ? material.moduleId._id : material.moduleId,
+      moduleId: material.moduleId,
       title: material.title,
       description: material.description,
       fileUrl: material.fileUrl
     });
-    setShowEditModal(true);
+    setEditingId(material._id);
+    setShowForm(true);
   };
 
-  
-  useEffect(() => {
-    fetchMaterials();
-   
-    setModules([
-      { _id: '1', name: 'Mathematics' },
-      { _id: '2', name: 'Physics' },
-      { _id: '3', name: 'Chemistry' },
-      { _id: '4', name: 'Computer Science' }
-    ]);
-  }, []);
+  const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this study material?')) {
+      return;
+    }
 
-  
-  useEffect(() => {
-    const delayedSearch = setTimeout(() => {
-      if (searchTerm) {
-        searchMaterials();
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/study-material/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setMaterials(materials.filter(m => m._id !== id));
+        showMessage('success', 'Study material deleted successfully!');
       } else {
-        fetchMaterials();
+        const errorData = await response.json();
+        showMessage('error', errorData.msg || 'Failed to delete material');
       }
-    }, 500);
+    } catch (error) {
+      showMessage('error', 'Network error. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return () => clearTimeout(delayedSearch);
-  }, [searchTerm, searchType]);
+  const getModuleName = (moduleId) => {
+    const module = modules.find(m => m._id === moduleId);
+    return module ? module.name : 'Unknown Module';
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Book className="text-blue-600" size={32} />
-              <h1 className="text-3xl font-bold text-gray-900">Study Materials</h1>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Study Material Manager
+              </h1>
+              <p className="text-gray-600 mt-2">Upload, manage, and organize your study materials</p>
             </div>
             <button
-              onClick={() => setShowAddModal(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+              onClick={() => setShowForm(true)}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               <Plus size={20} />
-              <span>Add Material</span>
+              Add Material
             </button>
           </div>
         </div>
 
-       
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                <input
-                  type="text"
-                  placeholder="Search study materials..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-            <select
-              value={searchType}
-              onChange={(e) => setSearchType(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="title">Search by Title</option>
-              <option value="module">Search by Module ID</option>
-            </select>
-            <button
-              onClick={() => {
-                setSearchTerm('');
-                fetchMaterials();
-              }}
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
-            >
-              Clear
-            </button>
+        {/* Message Alert */}
+        {message.text && (
+          <div className={`mb-6 p-4 rounded-xl flex items-center gap-3 ${
+            message.type === 'success' 
+              ? 'bg-green-50 text-green-800 border border-green-200' 
+              : 'bg-red-50 text-red-800 border border-red-200'
+          }`}>
+            <AlertCircle size={20} />
+            {message.text}
           </div>
-        </div>
+        )}
 
-        
-        <div className="bg-white rounded-lg shadow-sm">
-          {loading ? (
-            <div className="p-8 text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600">Loading materials...</p>
-            </div>
-          ) : materials.length === 0 ? (
-            <div className="p-8 text-center">
-              <FileText className="mx-auto text-gray-400 mb-4" size={48} />
-              <p className="text-gray-600">No study materials found</p>
-            </div>
-          ) : (
-            <div className="divide-y divide-gray-200">
-              {materials.map((material) => (
-                <div key={material._id} className="p-6 hover:bg-gray-50 transition-colors">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        {material.title}
-                      </h3>
-                      <p className="text-gray-600 mb-3">{material.description}</p>
-                      <div className="flex items-center space-x-4 text-sm text-gray-500">
-                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                          {typeof material.moduleId === 'object' 
-                            ? material.moduleId.name || 'Module' 
-                            : `Module ID: ${material.moduleId}`}
-                        </span>
-                        {material.fileUrl && (
-                          <a
-                            href={material.fileUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center space-x-1 text-blue-600 hover:text-blue-800"
-                          >
-                            <Download size={16} />
-                            <span>Download</span>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2 ml-4">
-                      <button
-                        onClick={() => openEditModal(material)}
-                        className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                      >
-                        <Edit2 size={18} />
-                      </button>
-                      <button
-                        onClick={() => deleteMaterial(material._id)}
-                        className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                      >
-                        <Trash2 size={18} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-       
-        {(showAddModal || showEditModal) && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
+        {/* Form Modal */}
+        {showForm && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+              <div className="p-8">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-gray-900">
-                    {editingMaterial ? 'Edit Study Material' : 'Add New Study Material'}
+                  <h2 className="text-2xl font-bold text-gray-800">
+                    {editingId ? 'Update Study Material' : 'Add New Study Material'}
                   </h2>
                   <button
-                    onClick={() => {
-                      setShowAddModal(false);
-                      setShowEditModal(false);
-                      setEditingMaterial(null);
-                      resetForm();
-                    }}
-                    className="text-gray-400 hover:text-gray-600"
+                    onClick={resetForm}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
                   >
                     <X size={24} />
                   </button>
                 </div>
 
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Module
-                    </label>
-                    <select
-                      name="moduleId"
-                      value={formData.moduleId}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    >
-                      <option value="">Select a module</option>
-                      {modules.map((module) => (
-                        <option key={module._id} value={module._id}>
-                          {module.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div className="space-y-6">
+                  {!editingId && (
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Module *
+                      </label>
+                      <select
+                        value={formData.moduleId}
+                        onChange={(e) => setFormData({...formData, moduleId: e.target.value})}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      >
+                        <option value="">Select a module</option>
+                        {modules.map(module => (
+                          <option key={module._id} value={module._id}>
+                            {module.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Title
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Title *
                     </label>
                     <input
                       type="text"
-                      name="title"
                       value={formData.title}
-                      onChange={handleInputChange}
+                      onChange={(e) => setFormData({...formData, title: e.target.value})}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="Enter material title"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Description
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Description *
                     </label>
                     <textarea
-                      name="description"
                       value={formData.description}
-                      onChange={handleInputChange}
+                      onChange={(e) => setFormData({...formData, description: e.target.value})}
                       required
-                      rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      rows="4"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
                       placeholder="Enter material description"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      File URL
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      File URL *
                     </label>
                     <input
                       type="url"
-                      name="fileUrl"
                       value={formData.fileUrl}
-                      onChange={handleInputChange}
+                      onChange={(e) => setFormData({...formData, fileUrl: e.target.value})}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="https://example.com/file.pdf"
                     />
                   </div>
 
-                  <div className="flex justify-end space-x-3 pt-4">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setShowAddModal(false);
-                        setShowEditModal(false);
-                        setEditingMaterial(null);
-                        resetForm();
-                      }}
-                      className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
-                    >
-                      Cancel
-                    </button>
+                  <div className="flex gap-4 pt-4">
                     <button
                       type="button"
                       onClick={handleSubmit}
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center space-x-2 transition-colors"
+                      disabled={loading}
+                      className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center gap-2 font-semibold disabled:opacity-50"
                     >
-                      <Save size={18} />
-                      <span>{editingMaterial ? 'Update' : 'Create'}</span>
+                      {loading ? (
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <>
+                          <Save size={20} />
+                          {editingId ? 'Update Material' : 'Add Material'}
+                        </>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={resetForm}
+                      className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-all duration-300 font-semibold"
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -430,9 +306,86 @@ const StudyMaterialsApp = () => {
             </div>
           </div>
         )}
+
+        {/* Materials Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {materials.map((material) => (
+            <div key={material._id} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden group">
+              <div className="p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl">
+                      <File className="text-blue-600" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-gray-800 text-lg line-clamp-1">{material.title}</h3>
+                      <p className="text-sm text-gray-500">{getModuleName(material.moduleId)}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{material.description}</p>
+
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <a
+                    href={material.fileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1 hover:underline"
+                  >
+                    <Upload size={16} />
+                    View File
+                  </a>
+                  
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleEdit(material)}
+                      className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
+                      title="Edit material"
+                    >
+                      <Edit3 size={16} />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(material._id)}
+                      disabled={loading}
+                      className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 disabled:opacity-50"
+                      title="Delete material"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <p className="text-xs text-gray-400">
+                    Created: {new Date(material.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Empty State */}
+        {materials.length === 0 && (
+          <div className="bg-white rounded-2xl shadow-lg p-12 text-center border border-gray-100">
+            <div className="p-6 bg-gray-50 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+              <File className="text-gray-400" size={32} />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">No Study Materials Yet</h3>
+            <p className="text-gray-600 mb-6">Start by adding your first study material to get organized.</p>
+            <button
+              onClick={() => setShowForm(true)}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 inline-flex items-center gap-2"
+            >
+              <Plus size={20} />
+              Add Your First Material
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default StudyMaterialsApp;
+export default StudyMaterialManager;
