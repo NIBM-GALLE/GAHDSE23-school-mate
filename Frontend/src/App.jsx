@@ -7,6 +7,9 @@ import TeacherParentChat from "./Pages/TeacherChatPage/TeacherChatPage";
 import UploadStudyMaterial from "./Pages/UploadStudyMaterial/UploadStudyMaterial";
 import TimeTableManager from "./Pages/TimeTableManager/TimeTableManager";
 import AttendanceManager from "./Pages/AttendanceManager/AttendanceManager";
+// import StudentGradeReport from "./Pages/StudentLandingPage/StudentGradeReport";
+import TeacherGradeReports from "./components/TeacherGradeReports";
+import ALGradesReports from "@/components/ALGradesReports";
 
 function App() {
   return (
@@ -16,13 +19,13 @@ function App() {
         <Route path="/login" element={<StudentLogin />} />
         <Route path="/teacher-login" element={<TeacherLogin />} />
         <Route path="/admin-login" element={<AdminLoginPage />} />
-
         <Route path="/teacher-chat" element={<TeacherParentChat />} />
-
         <Route path="/upload_studymaterial" element={<UploadStudyMaterial />} />
-
         <Route path="/timetable-manager" element={<TimeTableManager />} />
         <Route path="/attendance-manager" element={<AttendanceManager />} />
+         {/* <Route path="/grade-report" element={<StudentGradeReport />} /> */}
+          <Route path="/teacher/grade-reports" element={<TeacherGradeReports />} />
+          <Route path="/al-grade-reports" element={<ALGradesReports />} />
         {/* Add more routes as needed */}
 
 
