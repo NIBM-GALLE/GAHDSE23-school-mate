@@ -13,6 +13,8 @@ import ALGradesReports from "@/components/ALGradesReports";
 import AnnouncementPosting from "./Pages/AnnouncementPosting/AnnouncementPosting";
 import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import StudyMaterials from "./Pages/StudyMaterialsPage/StudyMaterials";
+import FeedbackManagement from "./Pages/TeacherFeedbackPage/FeedbackManagement";
+
 
 
 function App() {
@@ -38,6 +40,7 @@ function App() {
         <Route path="/announcement_posting" element={<AnnouncementPosting />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/study-material" element={<StudyMaterials />} />
+        <Route path="/teacher-feedback" element={<FeedbackManagement />} />
 
         {/* Add more routes as needed */}
 
