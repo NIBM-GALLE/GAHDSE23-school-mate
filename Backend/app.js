@@ -14,6 +14,10 @@ const facilityFeeRoutes = require('./routes/facilityFee'); // Import the facilit
 const userRoutes = require('./routes/user'); // Import the user routes
 const facilityPaymentRoutes = require('./routes/facilityPaymentRoutes'); // Import the facilityPayment routes
 const parentRoutes = require('./routes/parentRoutes'); // Import the parent routes
+const timetablesRoutes = require('./routes/timetables');
+const examRoutes = require('./routes/exam');
+const eventRoutes = require('./routes/events');
+const paymentRoutes = require('./routes/payments');
 
 const app = express();
 
@@ -38,6 +42,10 @@ app.use('/api/facility-fee', facilityFeeRoutes); // facilityFee routes
 app.use('/api/user', userRoutes); // user routes
 app.use('/api/facility-payments', facilityPaymentRoutes); // facilityPayment routes
 app.use('/api/parent', parentRoutes); // parent routes
+app.use('/api/timetables', timetableRoutes);
+app.use('/api/exam', examRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Start Server
 const PORT = 5000;
