@@ -21,7 +21,7 @@ const StudyMaterial = () => {
     fileUrl: ''
   });
 
-  // Sample data for demonstration
+  
   useEffect(() => {
     setMaterials([
       {
@@ -71,7 +71,7 @@ const StudyMaterial = () => {
 
     try {
       if (editingId) {
-        // Update existing material
+        
         const response = await fetch(`/api/study-material/${editingId}`, {
           method: 'PUT',
           headers: {
@@ -95,7 +95,7 @@ const StudyMaterial = () => {
           showMessage('error', errorData.msg || 'Failed to update material');
         }
       } else {
-        // Create new material
+        
         const response = await fetch('/api/study-material', {
           method: 'POST',
           headers: {
@@ -165,7 +165,7 @@ const StudyMaterial = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-100 to-stone-100 p-6">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
+        
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
@@ -185,7 +185,7 @@ const StudyMaterial = () => {
           </div>
         </div>
 
-        {/* Message Alert */}
+    
         {message.text && (
           <div className={`mb-6 p-4 rounded-xl flex items-center gap-3 ${
             message.type === 'success' 
@@ -197,7 +197,7 @@ const StudyMaterial = () => {
           </div>
         )}
 
-        {/* Form Modal */}
+        
         {showForm && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -313,7 +313,7 @@ const StudyMaterial = () => {
           </div>
         )}
 
-        {/* Materials Grid */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {materials.map((material) => (
             <div key={material._id} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 overflow-hidden group">
@@ -373,7 +373,7 @@ const StudyMaterial = () => {
           ))}
         </div>
 
-        {/* Empty State */}
+   
         {materials.length === 0 && (
           <div className="bg-white rounded-2xl shadow-lg p-12 text-center border border-gray-200">
             <div className="p-6 bg-slate-50 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
